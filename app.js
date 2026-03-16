@@ -83,11 +83,45 @@ let currentUser = "", db = null, katAktif = 'BANK';
 let tambahSaldoJenis = 'Bank';
 let filterKategoriAktif = 'all', filterTambahSaldoAktif = 'all';
 
-// Format angka
-function formatAngka(angka) { return angka.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
-window.fmt = function(el) { let v = el.value.replace(/\D/g, ''); el.value = v ? new Intl.NumberFormat('id-ID').format(v) : ''; }
-function toInt(v) { return parseInt(v.toString().replace(/\D/g, '')) || 0; }
-function fmtN(v) { return new Intl.NumberFormat('id-ID').format(v); }
+// ==================== FORMAT ANGKA (DENGAN TITIK) ====================
+function formatRupiah(angka, prefix = '') {
+    let number_string = angka.replace(/[^,\d]/g, '').toString(),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+    if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+    }
+
+    rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+    return prefix === undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+}
+
+// Format input saat mengetik (langsung tambah titik)
+window.fmt = function(el) {
+    let nilai = el.value.replace(/[^0-9]/g, ''); // Hanya angka
+    if (nilai) {
+        // Format dengan titik sebagai pemisah ribuan
+        el.value = new Intl.NumberFormat('id-ID').format(nilai);
+    } else {
+        el.value = '';
+    }
+}
+
+// Konversi dari format Rp 10.000 ke integer 10000
+function toInt(v) {
+    if (!v) return 0;
+    // Hapus semua kecuali angka
+    return parseInt(v.toString().replace(/[^0-9]/g, '')) || 0;
+}
+
+// Format angka ke tampilan Rupiah (untuk tabel/laporan)
+function fmtN(v) {
+    return new Intl.NumberFormat('id-ID').format(v || 0);
+}
 
 // ==================== LOGIN ====================
 window.prosesLogin = function() {
@@ -122,20 +156,85 @@ function initEvents() {
     const inpAdm = document.getElementById('t-adm');
     const inpKet = document.getElementById('t-ket');
 
-    if (inpNom) inpNom.addEventListener('keypress', e => { if (e.key == 'Enter') { e.preventDefault(); inpAdm.focus(); } });
-    if (inpAdm) inpAdm.addEventListener('keypress', e => { if (e.key == 'Enter') { e.preventDefault(); inpKet.focus(); } });
-    if (inpKet) inpKet.addEventListener('keypress', e => { if (e.key == 'Enter') { e.preventDefault(); simpanTr(); } });
-
-    const modalInput = document.getElementById('modalInput');
-    if (modalInput) {
-        modalInput.addEventListener('keyup', e => { e.target.value = formatAngka(e.target.value); });
-        modalInput.addEventListener('keypress', e => { if (e.key == 'Enter') { e.preventDefault(); prosesTambahSaldo(); } });
+    // Format otomatis saat mengetik di nominal
+    if (inpNom) {
+        inpNom.addEventListener('keyup', function(e) {
+            let nilai = this.value.replace(/[^0-9]/g, '');
+            if (nilai) {
+                this.value = new Intl.NumberFormat('id-ID').format(parseInt(nilai));
+            } else {
+                this.value = '';
+            }
+        });
+        inpNom.addEventListener('keypress', e => { 
+            if (e.key == 'Enter') { 
+                e.preventDefault(); 
+                inpAdm.focus(); 
+            } 
+        });
     }
 
+    // Format otomatis saat mengetik di admin
+    if (inpAdm) {
+        inpAdm.addEventListener('keyup', function(e) {
+            let nilai = this.value.replace(/[^0-9]/g, '');
+            if (nilai) {
+                this.value = new Intl.NumberFormat('id-ID').format(parseInt(nilai));
+            } else {
+                this.value = '';
+            }
+        });
+        inpAdm.addEventListener('keypress', e => { 
+            if (e.key == 'Enter') { 
+                e.preventDefault(); 
+                inpKet.focus(); 
+            } 
+        });
+    }
+
+    if (inpKet) inpKet.addEventListener('keypress', e => { 
+        if (e.key == 'Enter') { 
+            e.preventDefault(); 
+            simpanTr(); 
+        } 
+    });
+
+    // Format untuk modal tambah saldo
+    const modalInput = document.getElementById('modalInput');
+    if (modalInput) {
+        modalInput.addEventListener('keyup', function(e) {
+            let nilai = this.value.replace(/[^0-9]/g, '');
+            if (nilai) {
+                this.value = new Intl.NumberFormat('id-ID').format(parseInt(nilai));
+            } else {
+                this.value = '';
+            }
+        });
+        modalInput.addEventListener('keypress', e => { 
+            if (e.key == 'Enter') { 
+                e.preventDefault(); 
+                prosesTambahSaldo(); 
+            } 
+        });
+    }
+
+    // Format untuk modal saldo real
     const modalSaldoRealInput = document.getElementById('modalSaldoRealInput');
     if (modalSaldoRealInput) {
-        modalSaldoRealInput.addEventListener('keyup', e => { e.target.value = formatAngka(e.target.value); });
-        modalSaldoRealInput.addEventListener('keypress', e => { if (e.key == 'Enter') { e.preventDefault(); simpanSaldoReal(); } });
+        modalSaldoRealInput.addEventListener('keyup', function(e) {
+            let nilai = this.value.replace(/[^0-9]/g, '');
+            if (nilai) {
+                this.value = new Intl.NumberFormat('id-ID').format(parseInt(nilai));
+            } else {
+                this.value = '';
+            }
+        });
+        modalSaldoRealInput.addEventListener('keypress', e => { 
+            if (e.key == 'Enter') { 
+                e.preventDefault(); 
+                simpanSaldoReal(); 
+            } 
+        });
     }
 
     document.getElementById('modalBatal').onclick = tutupModalTambahSaldo;

@@ -16,7 +16,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
     background: var(--bg);
     margin: 0; padding: 0;
     color: var(--text);
@@ -325,7 +325,7 @@ body {
     width: 100%;
     border-collapse: collapse;
     background: white;
-    font-size: 8.5px;
+    font-size: 9px;
     margin-bottom: 6px;
     border-radius: 0 0 10px 10px;
     overflow: hidden;
@@ -334,27 +334,27 @@ body {
 }
 .history-table thead th {
     background: linear-gradient(135deg, #f0f4ff, #e8eeff);
-    padding: 6px 3px;
+    padding: 8px 3px;
     text-align: left;
     border-bottom: 2px solid #dde4f5;
-    font-size: 7.5px;
+    font-size: 8px;
     font-weight: 800;
     color: var(--primary);
     text-transform: uppercase;
     letter-spacing: 0.3px;
 }
 .history-table td {
-    padding: 5px 3px;
+    padding: 6px 3px;
     border-bottom: 1px solid #f5f7ff;
     word-break: break-word;
-    font-size: 8px;
+    font-size: 9px;
     line-height: 1.3;
     color: #444;
 }
 .history-table tbody tr:nth-child(even) { background: #fafbff; }
 .history-table tbody tr:hover { background: #f0f4ff; }
 .history-table .no-col {
-    font-weight: 800; color: var(--primary); font-size: 7.5px;
+    font-weight: 800; color: var(--primary); font-size: 8px;
     background: #eef2ff; text-align: center;
 }
 .tr-bank { border-left: 3px solid #4a89dc !important; }
@@ -365,7 +365,7 @@ body {
 .tr-aks  { border-left: 3px solid #f39c12 !important; }
 .history-table tfoot td {
     background: linear-gradient(135deg, #f8f9ff, #eef2ff);
-    font-weight: 800; color: var(--primary); font-size: 8px;
+    font-weight: 800; color: var(--primary); font-size: 9px;
     padding: 6px 4px; border-top: 2px solid #dde4f5;
 }
 
@@ -409,16 +409,16 @@ body {
     position: fixed; bottom: 0; left: 0; right: 0;
     background: white;
     display: flex; justify-content: space-around;
-    padding: 4px 0;
+    padding: 6px 0 8px;
     border-top: none;
     z-index: 1000;
     box-shadow: 0 -4px 20px rgba(43,103,246,0.12);
-    padding-bottom: max(4px, env(safe-area-inset-bottom));
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
 }
 .nav-item {
-    text-align: center; color: #ccc; cursor: pointer;
+    text-align: center; color: #aaa; cursor: pointer;
     flex: 1; border: none; background: none;
-    font-size: 8.5px; padding: 4px 0;
+    font-size: 9px; padding: 4px 0;
     transition: all 0.2s; font-weight: 600;
     position: relative;
 }
@@ -432,7 +432,7 @@ body {
     background: var(--primary);
     border-radius: 0 0 4px 4px;
 }
-.nav-item i { font-size: 18px; display: block; margin-bottom: 1px; }
+.nav-item i { font-size: 20px; display: block; margin-bottom: 2px; }
 .nav-item:active { transform: scale(0.92); }
 
 /* ===== MODAL ===== */
@@ -482,21 +482,21 @@ body {
 .modal-button.red { background: var(--red); color: white; box-shadow: 0 4px 12px rgba(231,76,60,0.3); }
 .modal-button.green { background: var(--green); color: white; box-shadow: 0 4px 12px rgba(98,175,109,0.3); }
 
-/* ===== REPORT CARD (REDESIGN UNTUK FOTO/PDF) ===== */
+/* ===== REPORT CARD (UNTUK LAPORAN) ===== */
 .report-card {
     background: white;
     border-radius: 18px;
-    padding: 18px 16px;
+    padding: 16px 14px;
     margin-bottom: 15px;
-    box-shadow: 0 4px 20px rgba(43,103,246,0.12);
+    box-shadow: 0 4px 15px rgba(43,103,246,0.08);
     border: 1.5px solid #eef2ff;
-    font-family: 'Courier New', monospace;
+    font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
 }
 .report-header {
     text-align: center;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px dashed #2b67f6;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eef2ff;
 }
 .report-logo {
     width: 50px;
@@ -530,7 +530,7 @@ body {
 .report-row {
     display: flex;
     justify-content: space-between;
-    padding: 5px 0;
+    padding: 6px 0;
     border-bottom: 1px solid #f0f2f8;
     font-size: 11px;
 }
@@ -538,8 +538,8 @@ body {
 .report-total-section {
     background: linear-gradient(135deg, #2b67f6, #1a4fc4);
     color: white;
-    margin: 15px -16px -16px;
-    padding: 15px 16px;
+    margin: 12px -14px -16px;
+    padding: 14px 14px;
     border-radius: 0 0 16px 16px;
 }
 .report-total-row {
@@ -630,7 +630,7 @@ body {
 .gs-modal {
     width: min(380px, 100%); background: #fff; border-radius: 18px; 
     box-shadow: 0 25px 60px rgba(0,0,0,.25); overflow: hidden; 
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
 }
 .gs-modal-h { padding: 14px 16px 8px; font-weight: 800; color: #2b67f6; font-size: 14px; }
 .gs-modal-b { padding: 0 16px 10px; color: #444; font-size: 12px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
